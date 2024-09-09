@@ -196,7 +196,8 @@ const styles = StyleSheet.create({
   bottomLeftCorner: {
     position: 'absolute',
     bottom: 0,
-    left: 0
+    left: 0,
+    zIndex: -100
   }
 
 })
