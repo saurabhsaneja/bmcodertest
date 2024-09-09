@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   already: {
-    fontSize: 21,
+    fontSize: 14,
     color: '#808080',
     fontFamily: getPoppinsFont('Medium'),
   },
   already2: {
-    fontSize: 21,
+    fontSize: 14,
     color: 'black',
     textDecorationLine: 'underline',
     fontFamily: getPoppinsFont('SemiBold'),
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    alignSelf: 'center'
   }
 })

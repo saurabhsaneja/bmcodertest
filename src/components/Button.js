@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 32,
         paddingVertical: 12,
+        shadowColor: "#A3CFFF",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.4,
+        shadowRadius: 5,
+        elevation: 2,
     },
     title: {
         fontSize: 24,
