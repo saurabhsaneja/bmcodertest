@@ -18,7 +18,7 @@ const App = () => {
   return (
         <NavigationContainer>
           <SafeAreaView style={{flex: 1}}>
-            <StatusBar backgroundColor={'green'} />
+            <StatusBar backgroundColor={'black'} />
             <MainStack/>
           </SafeAreaView>
         </NavigationContainer>

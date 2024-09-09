@@ -1,5 +1,5 @@
 import * as ScreenNames from './ScreenNames';
 
-// import * as Service from './Service';
+import * as Service from './Service';
 
-export {ScreenNames};
+export {ScreenNames, Service};

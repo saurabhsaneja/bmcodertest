@@ -7,6 +7,8 @@ import { ScreenNames } from 'global/Index';
 //screens
 import Splash from 'screens/Splash';
 import Welcome from '../screens/Welcome';
+import SignIn from '../screens/SignIn';
+import Home from '../screens/Home';
 
 const MainStack = () => {
   //variables
@@ -21,6 +23,8 @@ const MainStack = () => {
       initialRouteName={initialRouteName}>
       <Stack.Screen name={ScreenNames.SPLASH} component={Splash} />
       <Stack.Screen name={ScreenNames.WELCOME} component={Welcome} />
+      <Stack.Screen name={ScreenNames.SIGN_IN} component={SignIn} />
+      <Stack.Screen name={ScreenNames.HOME} component={Home} />
     </Stack.Navigator>
   );
 };

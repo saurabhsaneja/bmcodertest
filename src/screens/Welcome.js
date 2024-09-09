@@ -10,7 +10,7 @@ import Button from '../components/Button';
 
 const Welcome = ({ navigation }) => {
   const { height, width } = useWindowDimensions();
-  const gotoSignIn = () => { }
+  const gotoSignIn = () => { navigation.navigate(ScreenNames.SIGN_IN) }
   const gotoSignUp = () => { }
   //UI
   return (
@@ -21,7 +21,7 @@ const Welcome = ({ navigation }) => {
       </View>
       <Image source={require('../assets/images/logo.png')} style={{ width: width * 0.9, height: 341 / 428 * (width * 0.9) }} />
       <View style={styles.mainView} >
-        <Text style={styles.text}>Sparkle & Shine  Transform Your Drive with Every Wash!</Text>
+        <Text style={styles.text}>Sparkle & Shine Transform Your Drive with Every Wash!</Text>
         <Button title="Let's Start" onPress={gotoSignUp} extraStyle={{ marginTop: 40, width: '95%' }} />
         <View style={styles.bottomTextView}>
           <Text style={styles.already} >Already  have an account? </Text>
