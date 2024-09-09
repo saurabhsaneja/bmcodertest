@@ -2,8 +2,8 @@ import React from "react"
 import { StyleSheet, TextInput, Text, View, Image } from "react-native"
 import { getInterFont, getPoppinsFont } from "../helpers"
 
-const MyTextInput = ({ heading, value, setValue, placeholder, myRef, onSubmitEditing, iconType }) => {
-    const icon = iconType === 'email' ? require('../assets/images/mail.png') : iconType === 'password' ? require('../assets/images/lock.png') : null
+const MyTextInput = ({ heading, value, setValue, placeholder, myRef, onSubmitEditing, iconType, maxLength, keyboardType, secureTextEntry }) => {
+    const icon = iconType === 'email' ? require('../assets/images/mail.png') : iconType === 'password' ? require('../assets/images/lock.png') : require('../assets/images/user.png')
     return (
         <>
             <Text style={styles.heading}>{heading}</Text>
@@ -17,6 +17,9 @@ const MyTextInput = ({ heading, value, setValue, placeholder, myRef, onSubmitEdi
                     placeholder={placeholder}
                     placeholderTextColor='#808080'
                     onSubmitEditing={onSubmitEditing}
+                    maxLength={maxLength}
+                    keyboardType={keyboardType}
+                    secureTextEntry={secureTextEntry}
                 />
             </View>
         </>

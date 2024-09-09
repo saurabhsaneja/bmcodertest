@@ -11,7 +11,7 @@ import Button from '../components/Button';
 const Welcome = ({ navigation }) => {
   const { height, width } = useWindowDimensions();
   const gotoSignIn = () => { navigation.navigate(ScreenNames.SIGN_IN) }
-  const gotoSignUp = () => { }
+  const gotoSignUp = () => { navigation.navigate(ScreenNames.SIGN_UP) }
   //UI
   return (
     <ScrollView contentContainerStyle={styles.container} >

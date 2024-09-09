@@ -9,13 +9,30 @@ import { getPoppinsFont } from '../helpers';
 import Button from '../components/Button';
 import MyTextInput from '../components/MyTextInput';
 import Toast from 'react-native-simple-toast';
+import userStore from '../userStore'
 
 const Home = ({ navigation }) => {
+  const { userData, clearUserData } = userStore()
+  console.log({ userData });
   const { height, width } = useWindowDimensions();
+
+  const gotoWelcome = () =>
+    CommonActions.reset({
+      index: 1,
+      routes: [{ name: ScreenNames.WELCOME }],
+    });
+
+  const logout = async () => {
+    await AsyncStorage.clear();
+    clearUserData()
+    navigation.dispatch(gotoWelcome)
+  }
   //UI
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <Image source={require('../assets/images/logo.png')} style={{ width: width * 0.7, height: 341 / 428 * (width * 0.7), alignSelf: 'center' }} />
+      <Text style={styles.username}>Welcome {userData?.name}</Text>
+      <Button title='Logout' onPress={logout} extraStyle={{ marginTop: 150, width: '90%' }} />
     </ScrollView>
   );
 };
@@ -32,11 +49,13 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center'
   },
-  signIn: {
+  username: {
+    alignSelf: 'center',
     fontSize: 32,
     lineHeight: 48,
     fontFamily: getPoppinsFont('Bold'),
     color: '#000',
+    marginTop: 20,
   },
   weclome: {
     fontSize: 16,

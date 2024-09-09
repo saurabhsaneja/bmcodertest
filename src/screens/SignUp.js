@@ -11,57 +11,83 @@ import MyTextInput from '../components/MyTextInput';
 import Toast from 'react-native-simple-toast';
 import userStore from '../userStore'
 
-const SignIn = ({ navigation }) => {
-  const { userData } = userStore()
-  console.log('sign in userData', userData?.email);
+const SignUp = ({ navigation }) => {
+  const { userData, updateUserData } = userStore()
   const { height, width } = useWindowDimensions();
-  const [email, setEmail] = useState(String(userData?.email) || '')
-  const [password, setPassword] = useState(userData?.password || '')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const emailRef = useRef(null)
   const passwordRef = useRef(null)
-  const gotoSignUp = () => { navigation.navigate(ScreenNames.SIGN_UP) }
+  const gotoSignUp = () => { }
   const validation = () => {
-    if (email === '') {
+    if (name === '') {
+      Toast.show('Please enter Name', Toast.SHORT);
+    } else if (email === '') {
       Toast.show('Please enter Email', Toast.SHORT);
     } else if (password === '') {
       Toast.show('Please enter Password', Toast.SHORT);
     }
     return true
   }
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     if (!validation()) {
       return
     }
     try {
       const myData = new FormData();
+      myData.append('name', name);
       myData.append('phone', email);
       myData.append('password', password);
       const resp = await Service.postApi(
-        Service.LOGIN,
+        Service.REGISTER,
         myData
       );
-      console.log(`${Service.LOGIN} resp`, JSON.stringify(resp));
+      console.log(`${Service.REGISTER} resp`, JSON.stringify(resp));
       if (!resp?.data?.status) {
         Toast.show(`${resp?.data?.message}`, Toast.SHORT)
       } else {
-        navigation.navigate(ScreenNames.HOME)
+        const uData = { name, email, password }
+        updateUserData(uData)
+        await AsyncStorage.setItem('userData', JSON.stringify(uData));
+        navigation.navigate(ScreenNames.SIGN_IN)
       }
     } catch (error) {
-      Toast.show(`handleSignIn ${error}`, Toast.SHORT)
+      const error2 = error?.response?.data?.error
+      const key = Object.keys(error2)
+      const erroMessage = error2[key]
+      if (erroMessage) {
+        // {"error": {"phone": ["The phone has already been taken."]}, "status": false}
+        Toast.show(`handleSignUp ${erroMessage}`, Toast.SHORT)
+
+      }
     }
   }
   //UI
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <Image source={require('../assets/images/logo.png')} style={{ width: width * 0.7, height: 341 / 428 * (width * 0.7), alignSelf: 'center' }} />
-      <Text style={styles.signIn} >Sign In</Text>
-      <Text style={styles.weclome} >Hi! Welcome back, you {"\n"}have been missed </Text>
+      <Text style={styles.signIn} >Sign Up</Text>
+      <Text style={styles.weclome} >
+        Fill in the below form and add life {'\n'}to your car!</Text>
       <MyTextInput
+        value={name}
+        setValue={setName}
+        heading='Name'
+        placeholder='Enter your name'
+        onSubmitEditing={() => emailRef.current.focus()}
+        iconType='user'
+      />
+      <MyTextInput
+        myRef={emailRef}
         value={email}
         setValue={setEmail}
         heading='Email'
         placeholder='xyz@gmail.com'
         onSubmitEditing={() => passwordRef.current.focus()}
         iconType='email'
+        maxLength={10}
+        keyboardType='numeric'
       />
       <MyTextInput
         myRef={passwordRef}
@@ -70,12 +96,10 @@ const SignIn = ({ navigation }) => {
         setValue={setPassword}
         placeholder='password'
         iconType='password'
+        secureTextEntry
       />
-      <TouchableOpacity style={{ alignSelf: 'flex-end' }} >
-        <Text style={styles.already2}>Forgot Password?</Text>
-      </TouchableOpacity>
       {/* <View style={styles.mainView} > */}
-      <Button title="Sign In" onPress={handleSignIn} extraStyle={{ marginTop: 30, width: '95%' }} />
+      <Button title="Sign Up" onPress={handleSignUp} extraStyle={{ marginTop: 30, width: '95%' }} />
       <View style={styles.lineView} >
         <View style={styles.line} />
         <Text style={styles.or} >Or</Text>
@@ -101,7 +125,7 @@ const SignIn = ({ navigation }) => {
   );
 };
 
-export default SignIn;
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {

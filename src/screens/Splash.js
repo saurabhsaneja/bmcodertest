@@ -5,12 +5,14 @@ import { View, Image, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { ScreenNames } from '../global/Index';
+import userStore from '../userStore'
 
 const Splash = ({ navigation }) => {
+  const { updateUserData } = userStore()
   //function : navigation function
-  const resetIndexGoToUserBottomTab = CommonActions.reset({
+  const resetIndexGoToHome = CommonActions.reset({
     index: 1,
-    routes: [{ name: ScreenNames.USER_BOTTOM_TAB }],
+    routes: [{ name: ScreenNames.HOME }],
   });
   const resetIndexGoToWelcome = CommonActions.reset({
     index: 1,
@@ -19,7 +21,14 @@ const Splash = ({ navigation }) => {
   //useEffect
   useEffect(() => {
     setTimeout(async () => {
-      navigation.dispatch(resetIndexGoToWelcome);
+      const userData = await AsyncStorage.getItem('userData');
+      console.log('splash userData', userData);
+      if (userData) {
+        updateUserData(JSON.parse(userData))
+        navigation.dispatch(resetIndexGoToHome)
+      } else {
+        navigation.dispatch(resetIndexGoToWelcome);
+      }
     }, 2000);
     return () => { };
   }, []);
