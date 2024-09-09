@@ -22,8 +22,10 @@ const SignIn = ({ navigation }) => {
   const validation = () => {
     if (email === '') {
       Toast.show('Please enter Email', Toast.SHORT);
+      return false
     } else if (password === '') {
       Toast.show('Please enter Password', Toast.SHORT);
+      return false
     }
     return true
   }

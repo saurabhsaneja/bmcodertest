@@ -23,10 +23,13 @@ const SignUp = ({ navigation }) => {
   const validation = () => {
     if (name === '') {
       Toast.show('Please enter Name', Toast.SHORT);
+      return false
     } else if (email === '') {
       Toast.show('Please enter Email', Toast.SHORT);
+      return false
     } else if (password === '') {
       Toast.show('Please enter Password', Toast.SHORT);
+      return false
     }
     return true
   }
